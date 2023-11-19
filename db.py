@@ -1,5 +1,4 @@
 import databases
-import pytest
 import sqlalchemy
 
 # DATABASE_URL = "sqlite:///mydatabase.db"
@@ -43,6 +42,3 @@ engine = sqlalchemy.create_engine(
     DATABASE_URL, connect_args={"check_same_thread": False}
 )
 metadata.create_all(engine)
-
-if __name__ == '__main__':
-    pytest.main(['-v'])
