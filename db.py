@@ -1,7 +1,12 @@
+from os import environ
+
 import databases
 import sqlalchemy
 
-DATABASE_URL = "sqlite:///mydatabase.db"
+if environ.get("TESTING"):
+    DATABASE_URL = "sqlite:///test.db"
+else:
+    DATABASE_URL = "sqlite:///mydatabase.db"
 
 database = databases.Database(DATABASE_URL)
 metadata = sqlalchemy.MetaData()
