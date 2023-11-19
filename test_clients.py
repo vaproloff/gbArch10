@@ -1,10 +1,7 @@
-import os
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy_utils import create_database, drop_database
 from main import app
-
-os.environ['TESTING'] = 'True'
 from db import DATABASE_URL
 
 
@@ -16,11 +13,12 @@ def temp_db():
     try:
         yield DATABASE_URL
     finally:
+        pass
         drop_database(DATABASE_URL)
 
 
 @pytest.fixture
-def client():
+def client(temp_db):
     return TestClient(app)
 
 
@@ -128,7 +126,3 @@ def test_delete_client(client, temp_db):
     # Проверим, что клиента больше нет
     response = client.get(f"/clients/{client_id}")
     assert response.status_code == 404
-
-
-if __name__ == '__main__':
-    pytest.main(['-v'])
